@@ -22,11 +22,11 @@ def TimeToDate(timestamps):
 
 server='192.168.50.221'
 database='CapUOC_DataAnalysis'
-username='clong'
-password='KimJongUn2002'
+username=
+password=
 
 # Replace 'username', 'password', 'hostname', 'database_name' with your SQL Server credentials
-connection_string = 'mssql+pyodbc://clong:KimJongUn2002@192.168.50.221/CapUOC_DataAnalysis?driver=ODBC+Driver+17+for+SQL+Server'
+connection_string = 'mssql+pyodbc://username:password@192.168.50.221/CapUOC_DataAnalysis?driver=ODBC+Driver+17+for+SQL+Server'
 
 # Create SQLAlchemy engine
 engine = create_engine(connection_string)
