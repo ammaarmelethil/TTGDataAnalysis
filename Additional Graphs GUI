@@ -24,23 +24,4 @@ fig_day.update_traces(texttemplate='%{text:.2s}', textposition='outside')
 fig_day.update_layout(xaxis_title="Day of the Month", yaxis_title="Average Net Profit")
 st.plotly_chart(fig_day)
 
-# 7. Visualization: Table Key Insights
 
-# Calculate average TH and Strength
-average_th = filtered_data['TH'].mean()
-average_strength = filtered_data['Strength'].mean()
-
-# Calculate percentage of 'Side' column that are A and B
-side_counts = filtered_data['Side'].value_counts(normalize=True) * 100  # Gets the percentage of each value
-percent_a = side_counts.get('A', 0)  # Default to 0 if 'A' is not present
-percent_b = side_counts.get('B', 0)  # Default to 0 if 'B' is not present
-
-## CREATE DATAFRAME FOR TABLE ##
-statistics_df = pd.DataFrame({
-    'Metric': ['Average TH', 'Average Strength', 'Percentage A', 'Percentage B'],
-    'Value': [average_th, average_strength, f'{percent_a:.2f}%', f'{percent_b:.2f}%']
-})
-
-## DISPLAY TABLE IN STREAMLIT ##
-st.write('Key Metrics')
-st.table(statistics_df)
