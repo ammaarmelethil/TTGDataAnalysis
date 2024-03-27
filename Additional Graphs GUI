@@ -1,0 +1,25 @@
+# 5. Visualization: Average Profit by Day of the Week
+# Extract the day of the week from 'When' (0 = Monday, 6 = Sunday)
+filtered_data['Day of the Week'] = filtered_data['When'].dt.dayofweek
+# Calculate the average profit for each day of the week
+average_profit_weekday = filtered_data.groupby('Day of the Week')['Profit_Net'].mean().reset_index()
+# Map the integers to weekday names for clearer visualization
+weekday_mapping = {0: 'Monday', 1: 'Tuesday', 2: 'Wednesday', 3: 'Thursday', 4: 'Friday', 5: 'Saturday', 6: 'Sunday'}
+average_profit_weekday['Day of the Week'] = average_profit_weekday['Day of the Week'].map(weekday_mapping)
+# Plot
+fig_weekday = px.bar(average_profit_weekday, x='Day of the Week', y='Profit_Net', text='Profit_Net',
+                     title='Average Net Profit by Day of the Week')
+fig_weekday.update_traces(texttemplate='%{text:.2s}', textposition='outside')
+fig_weekday.update_layout(xaxis_title="Day of the Week", yaxis_title="Average Net Profit")
+st.plotly_chart(fig_weekday)
+
+# 6. Visualization: Average Profit by Day of the Month
+filtered_data['Day of the Month'] = filtered_data['When'].dt.day
+# Calculate the average profit for each day of the month
+average_profit_day = filtered_data.groupby('Day of the Month')['Profit_Net'].mean().reset_index()
+# Plot
+fig_day = px.bar(average_profit_day, x='Day of the Month', y='Profit_Net', text='Profit_Net',
+                 title='Average Net Profit by Day of the Month')
+fig_day.update_traces(texttemplate='%{text:.2s}', textposition='outside')
+fig_day.update_layout(xaxis_title="Day of the Month", yaxis_title="Average Net Profit")
+st.plotly_chart(fig_day)
