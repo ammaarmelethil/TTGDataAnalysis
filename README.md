@@ -12,7 +12,7 @@ Once the GUI folder is open, install the following packages:
 `pip install pickle`
 `pip install plotly`
 `pip install pandas`
-`pip install openai` (Optional)
+`pip install openai` (OpenAI is optional)
 
 To access the AI assistant, you should create an OpenAI account to generate an API key and add a small amount of funds to specify a model and use tokens. Refer to the [OpenAI API Documentation](https://platform.openai.com/docs/overview). 
 
