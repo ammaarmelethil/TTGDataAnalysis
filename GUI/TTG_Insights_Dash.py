@@ -179,7 +179,7 @@ with col2:
 
 
     # Assuming 'df' contains multiple market indicators alongside 'Profit_Net'
-    correlation_data = df[['Profit_Net', ' SPX ', ' NDX ', 'VIX', 'SPY', 'TLT']].corr()
+    correlation_data = filtered_data[['Profit_Net', ' SPX ', ' NDX ', 'VIX', 'SPY', 'TLT']].corr()
     fig = px.imshow(correlation_data, text_auto=True, aspect="auto", title="Correlation Heatmap")
     fig.update_layout(**layout_config)
     st.plotly_chart(fig)
