@@ -1,0 +1,52 @@
+import pandas as pd
+import numpy as np
+from sklearn.linear_model import Lasso
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score
+import matplotlib.pyplot as plt
+from mlxtend.plotting import scatterplotmatrix, heatmap
+
+# Load and preprocess the dataset
+file_path = "/Users/prince2heat/Downloads/Capstone Data2.csv"
+df = pd.read_csv(file_path, dtype=str)
+df.columns = df.columns.str.strip()  # Strip whitespace from column names
+df = df.apply(pd.to_numeric, errors='coerce')  # Convert all data to numeric, handling non-numeric with NaN
+
+# Data exploration
+print(df.head())  # Show first few rows
+print(df.tail())  # Show last few rows
+print(df.describe())  # Generate descriptive statistics
+print("Total missing values:", df.isnull().sum().sum())  # Calculate total number of missing values
+print(df.corr())  # Compute pairwise correlation of columns
+
+# Data visualization for selected columns
+cols = ["CAD-USD", "CAD-EUR", "Contracts", "Gross Profit", "Net Profit"]
+scatterplotmatrix(df[cols].values, figsize=(10, 8), names=cols, alpha=0.6)
+plt.tight_layout()
+plt.show()
+
+# Correlation heatmap
+cm = np.corrcoef(df[cols].values.T)
+heatmap(cm, row_names=cols, column_names=cols)
+plt.show()
+
+# Prepare data for Lasso regression
+X = df[['CAD-USD', 'CAD-EUR']]
+y = df[['1st Level', '2nd Level', "TH", "Strength", "Contracts", "Gross Profit", "Net Profit", "SPX"]]
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)
+
+# Lasso regression
+lasso = Lasso(alpha=1.0)
+lasso.fit(X_train, y_train)
+y_pred = lasso.predict(X_test)
+print("Slope: %.2f" % lasso.coef_[0])
+
+# Additional visualizations
+cols = ["CAD-USD", "CAD-EUR", "NDX", "VIX", "SPY", "TLT"]
+scatterplotmatrix(df[cols].values, figsize=(10, 8), names=cols, alpha=0.6)
+plt.tight_layout()
+plt.show()
+
+cm = np.corrcoef(df[cols].values.T)
+heatmap(cm, row_names=cols, column_names=cols)
+plt.show()
