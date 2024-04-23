@@ -1,0 +1,65 @@
+import streamlit as st
+import pandas as pd
+import plotly.graph_objects as go
+import pickle
+
+# Load DataFrame from the pickle file
+with open('my_dataframe.pkl', 'rb') as file:
+    df = pickle.load(file)
+
+# Assume df already has 'Open', 'High', 'Low', 'Close', 'Date', and 'Side' columns correctly processed
+# Representation 1 might be SPX related and Representation 2 might be static percentages
+# Let's create dummy data for Representation 2 for demonstration
+
+# Dummy data for Representation 2
+df_percent = df.copy()
+df_percent['High'] = 1  # +1% example, replace with actual calculation if needed
+df_percent['Low'] = -1  # -1% example, replace with actual calculation if needed
+
+# Set up Streamlit app
+st.title('TTG Trade Insights')
+
+## FILTERS AND CONFIGURATION ##################################################################
+st.sidebar.header('Filter Options')
+
+# Date-time range filters
+start_date = st.sidebar.date_input('Start date', value=pd.to_datetime(df['Date'].min()))
+start_time = st.sidebar.time_input('Start time', value=pd.to_datetime('00:00').time())
+end_date = st.sidebar.date_input('End date', value=pd.to_datetime(df['Date'].max()))
+end_time = st.sidebar.time_input('End time', value=pd.to_datetime('23:59').time())
+
+# Combine dates and times to create datetime range
+start_datetime = pd.to_datetime(f'{start_date} {start_time}')
+end_datetime = pd.to_datetime(f'{end_date} {end_time}')
+
+# Numeric range sliders
+side_filter = st.sidebar.selectbox('Select Side', options=df['Side'].unique())
+
+# Applying filters
+filtered_data = df[
+    (df['Date'] >= start_datetime) & (df['Date'] <= end_datetime) &
+    (df['Side'] == side_filter)]
+
+## VISUALIZATIONS ##################################################################
+
+# 1. SPX-Based Levels Candlestick Chart
+fig1 = go.Figure(data=[go.Candlestick(x=filtered_data['Date'],
+                                      open=filtered_data['Open'],
+                                      high=filtered_data['High'],
+                                      low=filtered_data['Low'],
+                                      close=filtered_data['Close'],
+                                      increasing_line_color='green' if filtered_data['Side'].iloc[0] == 'A' else 'red',
+                                      decreasing_line_color='blue' if filtered_data['Side'].iloc[0] == 'B' else 'orange')])
+fig1.update_layout(title='SPX-Based Levels Candlestick Chart', xaxis_title='Date', yaxis_title='SPX Level')
+st.plotly_chart(fig1)
+
+# 2. Percentage-Based Levels Candlestick Chart
+fig2 = go.Figure(data=[go.Candlestick(x=df_percent['Date'],
+                                      open=df_percent['Open'],
+                                      high=df_percent['High'],
+                                      low=df_percent['Low'],
+                                      close=df_percent['Close'],
+                                      increasing_line_color='green' if df_percent['Side'].iloc[0] == 'A' else 'red',
+                                      decreasing_line_color='blue' if df_percent['Side'].iloc[0] == 'B' else 'orange')])
+fig2.update_layout(title='Percentage-Based Levels Candlestick Chart', xaxis_title='Date', yaxis_title='Percentage Level')
+st.plotly_chart(fig2)
