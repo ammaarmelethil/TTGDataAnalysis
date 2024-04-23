@@ -23,8 +23,8 @@ import urllib
 # Connection parameters for SQL database
 server = '192.168.50.221'
 database = 'CapUOC_DataAnalysis'
-username = 'djaime'
-password = 'Enrique30072000!2'  # Your Password
+username = 'USERNAME'
+password = 'PASSWORD'  # Your Password
 
 # Connect to SQL Server database
 connection_string = f'DRIVER={{SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
