@@ -1,4 +1,6 @@
 # Info
+Note that this is a heavily simplified application for demo purposes, the actual GUI and data pipelines developed are proprietary and not for public use/viewing
+
 Tartigrade has given us a complex series of trades involving Stocks, options, futures contracts and FX (mainly CAD.USD).
 
 They have greatly simplified the definition of their trades by building the following Key Trade Characteristics:
@@ -7,7 +9,7 @@ They have greatly simplified the definition of their trades by building the foll
 We have developed the following dashboard allowing them to visualize live and past data by filtering through controllable features.
 ![ScreenRecording2024-04-11at8 40 30PM-ezgif com-video-to-gif-converter](https://github.com/ammaarmelethil/TTGDataAnalysis/assets/100314064/9ac2e22e-1da2-4281-98f9-a23beb37f5a8)
 
-And a 24/7 AI analyst powered by OpenAI to answer all questions regarding the data in their DB
+And an AI analyst powered by a locally-run LLM (OpenAI for demo purposes)
 <img width="793" alt="Screenshot 2024-04-10 at 5 09 06 PM" src="https://github.com/ammaarmelethil/TTGDataAnalysis/assets/100314064/04d17b04-240a-4f7b-94f5-7f7e2786987d">
 
 <img width="737" alt="Screenshot 2024-04-10 at 5 30 02 PM" src="https://github.com/ammaarmelethil/TTGDataAnalysis/assets/100314064/2393d1f9-ef57-4f27-861f-7ca7f5e0e31e">
